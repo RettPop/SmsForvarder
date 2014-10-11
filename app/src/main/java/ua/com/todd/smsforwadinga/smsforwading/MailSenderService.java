@@ -11,8 +11,10 @@ import org.apache.commons.mail.SimpleEmail;
 import java.sql.SQLException;
 import java.util.List;
 
-import ua.com.todd.smsforwadinga.smsforwading.model.Sms;
+import ua.com.todd.baseapp.utils.Utils;
 import ua.com.todd.smsforwadinga.smsforwading.data.HelperFactory;
+import ua.com.todd.smsforwadinga.smsforwading.managers.PreferenceManager;
+import ua.com.todd.smsforwadinga.smsforwading.model.Sms;
 
 public class MailSenderService extends IntentService {
 
@@ -20,25 +22,42 @@ public class MailSenderService extends IntentService {
         super(MailSenderService.class.getName());
     }
 
+    private String login;
+    private String pass;
+    private String host;
+    private int port;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        MyApplication app = (MyApplication) getApplication();
+        PreferenceManager preferenceManager = app.getPreferenceManager();
+        login = preferenceManager.restorePassword();
+        pass = preferenceManager.restorePassword();
+        host = preferenceManager.restoreHost();
+        port = preferenceManager.restorePort();
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
-        try {
-            List<Sms> smsList = HelperFactory.getHelper().getSmsDAO().getAllSms();
-            Email email = new SimpleEmail();
-            email.setHostName("smtp.gmail.com");
-            email.setSmtpPort(587);
-            email.setStartTLSEnabled(true);
-            email.setAuthenticator(new DefaultAuthenticator("mr.kakashka@gmail.com", ""));
-            email.setFrom("mr.kakashka@gmail.com");
-            email.setSubject("TestMail");
-            email.setMsg(smsList.toString());
-            email.addTo("anndomashenko@hotmail.com");
-            email.send();
-            HelperFactory.getHelper().getSmsDAO().delete(smsList);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (EmailException e) {
-            e.printStackTrace();
-        }
+        if (Utils.isNotNull(login, pass, host, port))
+            try {
+                List<Sms> smsList = HelperFactory.getHelper().getSmsDAO().getAllSms();
+                Email email = new SimpleEmail();
+                email.setHostName(host);
+                email.setSmtpPort(port);
+                email.setStartTLSEnabled(true);
+                email.setAuthenticator(new DefaultAuthenticator(login, pass));
+                email.setFrom(login);
+                email.setSubject("TestMail");
+                email.setMsg(smsList.toString());
+                email.addTo("anndomashenko@hotmail.com");
+                email.send();
+                HelperFactory.getHelper().getSmsDAO().delete(smsList);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (EmailException e) {
+                e.printStackTrace();
+            }
     }
 }

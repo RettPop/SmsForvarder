@@ -17,7 +17,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         sp = app.getSharedPreferences(app.getPackageName(), Context.MODE_PRIVATE);
     }
 
-    protected void storeString(IKey key, String str) {
+    protected void storeValue(IKey key, String str) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString(key.toString(), str);
         editor.apply();
@@ -27,7 +27,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getString(key.toString(), "");
     }
 
-    protected void storeBoolean(IKey key, boolean b) {
+    protected void storeValue(IKey key, boolean b) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(key.toString(), b);
         editor.apply();
@@ -37,7 +37,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getBoolean(key.toString(), true);
     }
 
-    protected void storeInt(IKey key, int i) {
+    protected void storeValue(IKey key, int i) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putInt(key.toString(), i);
         editor.apply();
@@ -47,7 +47,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getInt(key.toString(), 0);
     }
 
-    protected void storeFloat(IKey key, float i) {
+    protected void storeValue(IKey key, float i) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putFloat(key.toString(), i);
         editor.apply();
@@ -57,7 +57,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getFloat(key.toString(), 0);
     }
 
-    protected void storeLong(IKey key, long i) {
+    protected void storeValue(IKey key, long i) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putLong(key.toString(), i);
         editor.apply();
@@ -67,7 +67,7 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getLong(key.toString(), 0);
     }
 
-    protected void storeStringSet(IKey key, Set<String> i) {
+    protected void storeValue(IKey key, Set<String> i) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putStringSet(key.toString(), i);
         editor.apply();
@@ -77,10 +77,10 @@ public class BasePreferenceManager<T extends Application> extends BaseManager<T>
         return sp.getStringSet(key.toString(), new HashSet<String>());
     }
 
-    protected <T> void storeObject(IKey key, T obj) {
+    protected <T> void storeValue(IKey key, T obj) {
         Gson gson = new Gson();
         String str = gson.toJson(obj);
-        storeString(key, str);
+        storeValue(key, str);
     }
 
     protected <T> T restoreObject(IKey key, Class<T> cls) {
