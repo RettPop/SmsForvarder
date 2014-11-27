@@ -4,7 +4,7 @@ android {
     compileSdkVersion 15
     buildToolsVersion '20.0.0'
     defaultConfig {
-        applicationId 'ua.com.todd.smsforwadinga.smsforwading'
+        applicationId 'ua.com.todd.smsforwading'
         minSdkVersion 15
         targetSdkVersion 15
         versionCode 1
