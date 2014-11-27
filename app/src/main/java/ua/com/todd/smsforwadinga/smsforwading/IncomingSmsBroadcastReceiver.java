@@ -8,7 +8,6 @@ import android.telephony.SmsMessage;
 
 import java.sql.SQLException;
 
-import ua.com.todd.smsforwadinga.smsforwading.model.Sms;
 import ua.com.todd.smsforwadinga.smsforwading.data.HelperFactory;
 
 public class IncomingSmsBroadcastReceiver extends BroadcastReceiver {
@@ -16,15 +15,15 @@ public class IncomingSmsBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
-            Object[] pdus = (Object[])bundle.get("pdus");
+            Object[] pdus = (Object[]) bundle.get("pdus");
             final SmsMessage[] messages = new SmsMessage[pdus.length];
             for (int i = 0; i < pdus.length; i++) {
-                messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
+                messages[i] = SmsMessage.createFromPdu((byte[]) pdus[i]);
             }
             if (messages.length > 0) {
                 StringBuilder sb = new StringBuilder();
-                for(int i = 0; i< messages.length; i++){
-                    sb.append(messages[i].getMessageBody());
+                for (SmsMessage s : messages) {
+                    sb.append(s.getMessageBody());
                     sb.append("\n\n");
                 }
                 Sms sms = new Sms(sb.toString());

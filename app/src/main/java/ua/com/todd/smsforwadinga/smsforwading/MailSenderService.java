@@ -5,16 +5,13 @@ import android.content.Intent;
 
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.SimpleEmail;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import ua.com.todd.baseapp.utils.Utils;
 import ua.com.todd.smsforwadinga.smsforwading.data.HelperFactory;
 import ua.com.todd.smsforwadinga.smsforwading.managers.PreferenceManager;
-import ua.com.todd.smsforwadinga.smsforwading.model.Sms;
 
 public class MailSenderService extends IntentService {
 
@@ -51,12 +48,10 @@ public class MailSenderService extends IntentService {
                 email.setFrom(login);
                 email.setSubject("TestMail");
                 email.setMsg(smsList.toString());
-                email.addTo("anndomashenko@hotmail.com");
+                email.addTo("timandriyaschenko@gmail.com");
                 email.send();
                 HelperFactory.getHelper().getSmsDAO().delete(smsList);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (EmailException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
     }

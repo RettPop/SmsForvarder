@@ -6,7 +6,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
-import ua.com.todd.smsforwadinga.smsforwading.model.Sms;
+import ua.com.todd.smsforwadinga.smsforwading.Sms;
 
 public class SmsDAO extends BaseDaoImpl<Sms, Integer> {
 
