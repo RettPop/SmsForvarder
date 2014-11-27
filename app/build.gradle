@@ -1,4 +1,5 @@
 apply plugin: "android"
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 15
@@ -16,11 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
-    }
     productFlavors {
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -33,4 +33,17 @@ dependencies {
     compile project(':baseapp')
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.googlecode.android-query:android-query:0.25.9'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+buildscript {
+    ext.kotlin_version = '0.9.66'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+repositories {
+    mavenCentral()
 }
