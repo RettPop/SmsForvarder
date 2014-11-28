@@ -32,6 +32,8 @@ public class MailSenderService : IntentService(javaClass<MailSenderService>().ge
         if (Utils.isNotNull(login, pass, host, port))
             try {
                 val smsList = HelperFactory.getHelper().getSmsDAO()?.getAllSms()
+                if(smsList!!.empty)
+                    return;
                 val email = SimpleEmail()
                 email.setHostName(host)
                 email.setSmtpPort(port)
