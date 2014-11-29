@@ -9,9 +9,7 @@ import ua.com.todd.baseapp.utils.NetworkUtils
 
 public class ConnectivityChangeBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if(NetworkUtils.isOnline(context)){
-            val i = Intent(context, javaClass<MailSenderService>())
-            context.startService(i)
-        }
+        if(NetworkUtils.isOnline(context))
+            context.startService(Intent(context, javaClass<MailSenderService>()))
     }
 }

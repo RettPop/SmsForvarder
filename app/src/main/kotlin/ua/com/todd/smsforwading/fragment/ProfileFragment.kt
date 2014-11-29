@@ -6,12 +6,8 @@ import ua.com.todd.smsforwading.R
 
 public class ProfileFragment : BaseFragment(){
     class object {
-        public fun getInstance(): Fragment {
-            return ProfileFragment()
-        }
+        public fun getInstance(): Fragment = ProfileFragment()
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_profile
-    }
+    override fun getLayoutId() = R.layout.fragment_profile
 }

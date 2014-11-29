@@ -12,35 +12,19 @@ public class PreferenceManager(app: MyApplication) : BasePreferenceManager<MyApp
         HOST
     }
 
-    public fun storeEmail(str: String) {
-        storeValue(Keys.EMAIL, str)
-    }
+    public fun storeEmail(str: String): Unit = storeValue(Keys.EMAIL, str)
 
-    public fun restoreEmail(): String {
-        return restoreString(Keys.EMAIL)
-    }
+    public fun restoreEmail(): String = restoreString(Keys.EMAIL)
 
-    public fun storePassword(str: String) {
-        storeValue(Keys.PASS, str)
-    }
+    public fun storePassword(str: String): Unit = storeValue(Keys.PASS, str)
 
-    public fun restorePassword(): String {
-        return restoreString(Keys.PASS)
-    }
+    public fun restorePassword(): String = restoreString(Keys.PASS)
 
-    public fun storePort(value: Int) {
-        storeValue(Keys.PORT, value)
-    }
+    public fun storePort(value: Int): Unit = storeValue(Keys.PORT, value)
 
-    public fun restorePort(): Int? {
-        return restoreInt(Keys.PORT)
-    }
+    public fun restorePort(): Int = restoreInt(Keys.PORT)
 
-    public fun storeHost(str: String) {
-        storeValue(Keys.HOST, str)
-    }
+    public fun storeHost(str: String): Unit = storeValue(Keys.HOST, str)
 
-    public fun restoreHost(): String {
-        return restoreString(Keys.HOST)
-    }
+    public fun restoreHost(): String = restoreString(Keys.HOST)
 }

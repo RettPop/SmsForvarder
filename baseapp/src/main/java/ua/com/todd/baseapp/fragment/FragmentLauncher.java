@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import ua.com.todd.baseapp.BaseApplication;
 import ua.com.todd.baseapp.R;
-import ua.com.todd.baseapp.fragment.FragmentFactory.BaseFragmentType;
+import ua.com.todd.baseapp.fragment.FragmentFactory.IBaseFragmentType;
 
 public class FragmentLauncher {
     private Activity activity;
@@ -18,71 +18,71 @@ public class FragmentLauncher {
         this.activity = activity;
     }
 
-    public void addFragment(BaseFragmentType type) {
+    public void addFragment(IBaseFragmentType type) {
         addFragment(type, null);
     }
 
-    public void addFragmentWithStack(BaseFragmentType type) {
+    public void addFragmentWithStack(IBaseFragmentType type) {
         addFragmentWithStack(type, null);
     }
 
-    public void replaceFragment(BaseFragmentType type) {
+    public void replaceFragment(FragmentFactory.IBaseFragmentType type) {
         replaceFragment(type, null);
     }
 
-    public void replaceFragmentWithStack(BaseFragmentType type) {
+    public void replaceFragmentWithStack(IBaseFragmentType type) {
         replaceFragmentWithStack(type, null);
     }
 
-    public void addFragment(BaseFragmentType type, Bundle bundle) {
+    public void addFragment(IBaseFragmentType type, Bundle bundle) {
         launchFragment(0, type, false, LaunchType.ADD, bundle);
     }
 
-    public void addFragmentWithStack(BaseFragmentType type, Bundle bundle) {
+    public void addFragmentWithStack(IBaseFragmentType type, Bundle bundle) {
         launchFragment(0, type, true, LaunchType.ADD, bundle);
     }
 
-    public void replaceFragment(FragmentFactory.BaseFragmentType type, Bundle bundle) {
+    public void replaceFragment(IBaseFragmentType type, Bundle bundle) {
         launchFragment(0, type, false, LaunchType.REPLACE, bundle);
     }
 
-    public void replaceFragmentWithStack(BaseFragmentType type, Bundle bundle) {
+    public void replaceFragmentWithStack(IBaseFragmentType type, Bundle bundle) {
         launchFragment(0, type, true, LaunchType.REPLACE, bundle);
     }
 
-    public void addFragment(int containerId, BaseFragmentType type) {
+    public void addFragment(int containerId, IBaseFragmentType type) {
         addFragment(containerId, type, null);
     }
 
-    public void addFragmentWithStack(int containerId, BaseFragmentType type) {
+    public void addFragmentWithStack(int containerId, IBaseFragmentType type) {
         addFragmentWithStack(containerId, type, null);
     }
 
-    public void replaceFragment(int containerId, BaseFragmentType type) {
+    public void replaceFragment(int containerId, IBaseFragmentType type) {
         replaceFragment(containerId, type, null);
     }
 
-    public void replaceFragmentWithStack(int containerId, BaseFragmentType type) {
+    public void replaceFragmentWithStack(int containerId, IBaseFragmentType type) {
         replaceFragmentWithStack(containerId, type, null);
     }
 
-    public void addFragment(int containerId, BaseFragmentType type, Bundle bundle) {
+    public void addFragment(int containerId, IBaseFragmentType type, Bundle bundle) {
         launchFragment(containerId, type, false, LaunchType.ADD, bundle);
     }
 
-    public void addFragmentWithStack(int containerId, BaseFragmentType type, Bundle bundle) {
+    public void addFragmentWithStack(int containerId, IBaseFragmentType type, Bundle bundle) {
         launchFragment(containerId, type, true, LaunchType.ADD, bundle);
     }
 
-    public void replaceFragment(int containerId, BaseFragmentType type, Bundle bundle) {
+    public void replaceFragment(int containerId, IBaseFragmentType type, Bundle bundle) {
         launchFragment(containerId, type, false, LaunchType.REPLACE, bundle);
     }
 
-    public void replaceFragmentWithStack(int containerId, BaseFragmentType type, Bundle bundle) {
+    public void replaceFragmentWithStack(int containerId, IBaseFragmentType type, Bundle bundle) {
         launchFragment(containerId, type, true, LaunchType.REPLACE, bundle);
     }
 
-    private void launchFragment(int containerId, BaseFragmentType type, boolean backStack, LaunchType launchType, Bundle bundle) {
+    private void launchFragment(int containerId, IBaseFragmentType type, boolean backStack, LaunchType launchType, Bundle bundle) {
         Fragment fragment = activity.getFragmentManager().findFragmentByTag(type.toString());
         if (fragment == null) {
             fragment = fragmentFactory.getFragment(type, bundle);

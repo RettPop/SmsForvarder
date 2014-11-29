@@ -9,9 +9,7 @@ public class HelperFactory {
 
         private var databaseHelper: DatabaseHelper? = null
 
-        public fun getHelper(): DatabaseHelper {
-            return databaseHelper as DatabaseHelper
-        }
+        public fun getHelper(): DatabaseHelper = databaseHelper as DatabaseHelper
 
         public fun setHelper(context: Context) {
             databaseHelper = OpenHelperManager.getHelper<DatabaseHelper>(context, javaClass<DatabaseHelper>())

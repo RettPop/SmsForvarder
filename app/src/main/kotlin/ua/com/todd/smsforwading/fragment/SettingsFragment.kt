@@ -4,37 +4,35 @@ import android.app.Fragment
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 
 import ua.com.todd.baseapp.fragment.BaseFragment
 import ua.com.todd.smsforwading.R
 import ua.com.todd.smsforwading.managers.PreferenceManager
+import kotlin.properties.Delegates
+import java.util.ArrayList
 
 public class SettingsFragment : BaseFragment() {
 
-    private var host: String? = null
-    private var port: String? = null
-    private var email: String? = null
-    private var pass: String? = null
+    private var host: String by Delegates.notNull()
+    private var port: String by Delegates.notNull()
+    private var email: String by Delegates.notNull()
+    private var pass: String by Delegates.notNull()
 
-    private var buttonCancel: Button? = null
-    private var buttonOk: Button? = null
+    private var buttonCancel: Button by Delegates.notNull()
+    private var buttonOk: Button by Delegates.notNull()
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_settings
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val pm :PreferenceManager = getPreferenceManager()
-        host = pm.restoreHost()
-        port = pm.restorePort().toString()
-        email = pm.restoreEmail()
-        pass = pm.restorePassword()
+        with(getPreferenceManager<PreferenceManager>()) {
+            host = restoreHost()
+            port = restorePort().toString()
+            email = restoreEmail()
+            pass = restorePassword()
+        }
         val etHost = getAQuery().id(R.id.etHost).text(host).getEditText()
         val etPort = getAQuery().id(R.id.etPort).text(port).getEditText()
         val etMail = getAQuery().id(R.id.etMail).text(email).getEditText()
@@ -47,10 +45,12 @@ public class SettingsFragment : BaseFragment() {
                 pass = etPass.getText().toString()
                 port = etPort.getText().toString()
                 val port = Integer.parseInt(port)
-                pm.storeEmail(email as String)
-                pm.storeHost(host as String)
-                pm.storePassword(pass as String)
-                pm.storePort(port)
+                with(getPreferenceManager<PreferenceManager>()) {
+                    storeEmail(email as String)
+                    storeHost(host as String)
+                    storePassword(pass as String)
+                    storePort(port)
+                }
                 v.setVisibility(View.GONE)
                 buttonCancel!!.setVisibility(View.GONE)
             }
@@ -88,17 +88,15 @@ public class SettingsFragment : BaseFragment() {
                 }
             }
         }
-
-        etHost.addTextChangedListener(textWatcher)
-        etPort.addTextChangedListener(textWatcher)
-        etMail.addTextChangedListener(textWatcher)
-        etPass.addTextChangedListener(textWatcher)
+        w(etHost, etPort, etMail, etPass) {addTextChangedListener(textWatcher)}
     }
 
     class object {
-
-        public fun getInstance(): Fragment {
-            return SettingsFragment()
-        }
+        public fun getInstance(): Fragment = SettingsFragment()
     }
+}
+
+public inline fun <T, R> w(vararg receivers: T, f: T.() -> R): Unit {
+    for (r in receivers)
+        r.f()
 }

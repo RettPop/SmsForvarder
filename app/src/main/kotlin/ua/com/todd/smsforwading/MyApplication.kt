@@ -22,7 +22,5 @@ public class MyApplication : BaseApplication() {
         return PreferenceManager(this)
     }
 
-    override fun createFragmentFactory(): FragmentFactory {
-        return ua.com.todd.smsforwading.fragment.FragmentFactory();
-    }
+    override fun createFragmentFactory(): FragmentFactory = ua.com.todd.smsforwading.fragment.FragmentFactory();
 }

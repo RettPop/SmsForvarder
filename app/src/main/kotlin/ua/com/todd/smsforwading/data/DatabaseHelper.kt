@@ -11,11 +11,12 @@ import com.j256.ormlite.table.TableUtils
 import java.sql.SQLException
 
 import ua.com.todd.smsforwading.Sms
+import kotlin.properties.Delegates
 
 public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context, DatabaseHelper.DATABASE_NAME, null, DatabaseHelper.DATABASE_VERSION) {
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private var smsDAO: SmsDAO? = null
+    private var smsDAO: SmsDAO? = null;
 
     //Выполняется, когда файл с БД не найден на устройстве
     override fun onCreate(db: SQLiteDatabase, connectionSource: ConnectionSource) {
@@ -25,7 +26,6 @@ public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context,
             Log.e(TAG, "error creating DB " + DATABASE_NAME)
             throw RuntimeException(e)
         }
-
     }
 
     //Выполняется, когда БД имеет версию отличную от текущей
@@ -38,16 +38,10 @@ public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context,
             Log.e(TAG, "error upgrading db " + DATABASE_NAME + "from ver " + oldVer)
             throw RuntimeException(e)
         }
-
     }
 
     throws(javaClass<SQLException>())
-    public fun getSmsDAO(): SmsDAO? {
-        if (smsDAO == null) {
-            smsDAO = SmsDAO(getConnectionSource(), javaClass<Sms>())
-        }
-        return smsDAO
-    }
+    public fun getSmsDAO(): SmsDAO? = smsDAO ?: SmsDAO(getConnectionSource(), javaClass<Sms>())
 
     //выполняется при закрытии приложения
     override fun close() {

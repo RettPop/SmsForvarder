@@ -1,18 +1,15 @@
 package ua.com.todd.smsforwading.fragment
 
-import ua.com.todd.baseapp.fragment.FragmentFactory.BaseFragmentType
+import ua.com.todd.baseapp.fragment.FragmentFactory.IBaseFragmentType
 import android.os.Bundle
 import android.app.Fragment
 
 public class FragmentFactory : ua.com.todd.baseapp.fragment.FragmentFactory() {
-    override fun getFragment(type: BaseFragmentType, bundle: Bundle?): Fragment {
-        val fragmentType = type as FragmentType;
-        return when (fragmentType){
-            FragmentType.SETTINGS -> SettingsFragment()
-        }
+    override fun getFragment(type: IBaseFragmentType, bundle: Bundle?) = when (type as FragmentType) {
+        FragmentType.SETTINGS -> SettingsFragment()
     }
 
-    public enum class FragmentType : BaseFragmentType {
+    public enum class FragmentType : IBaseFragmentType {
         SETTINGS
     }
 }

@@ -1,39 +1,27 @@
 package ua.com.todd.smsforwading.activity
 
-import android.app.Activity
-import android.app.Fragment
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 
 import ua.com.todd.smsforwading.R
-import ua.com.todd.smsforwading.fragment.SettingsFragment
-import ua.com.todd.smsforwading.fragment.ProfileFragment
 import ua.com.todd.baseapp.activity.BaseActivity
 import ua.com.todd.smsforwading.fragment.FragmentFactory.FragmentType
 
 
 public class MainActivity : BaseActivity() {
 
-    override fun getActivityLayoutId(): Int {
-        return R.layout.activity_main
-    }
+    override fun getActivityLayoutId() = R.layout.activity_main
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.getItemId()
-        if (id == R.id.action_settings) {
-            getFragmentLauncher().addFragmentWithStack(FragmentType.SETTINGS)
-            return true
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.getItemId()) {
+            R.id.action_settings -> {
+                getFragmentLauncher().addFragmentWithStack(FragmentType.SETTINGS)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
-    }
 }

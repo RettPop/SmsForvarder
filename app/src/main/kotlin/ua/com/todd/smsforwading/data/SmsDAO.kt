@@ -11,7 +11,5 @@ public class SmsDAO [throws(javaClass<SQLException>())]
 internal (connectionSource: ConnectionSource, dataClass: Class<Sms>) : BaseDaoImpl<Sms, Int>(connectionSource, dataClass) {
 
     throws(javaClass<SQLException>())
-    public fun getAllSms(): List<Sms> {
-        return this.queryForAll()
-    }
+    public fun getAllSms(): List<Sms> = queryForAll()
 }
