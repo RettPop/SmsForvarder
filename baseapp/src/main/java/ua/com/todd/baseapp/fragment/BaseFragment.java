@@ -3,7 +3,9 @@ package ua.com.todd.baseapp.fragment;
 import android.app.Application;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.androidquery.AQuery;
 
@@ -18,6 +20,15 @@ public class BaseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         app = (BaseApplication) getActivity().getApplication();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(getLayoutId(), container, false);
+    }
+
+    protected int getLayoutId(){
+        return 0;
     }
 
     @Override

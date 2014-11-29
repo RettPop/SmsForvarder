@@ -1,7 +1,10 @@
 package ua.com.todd.baseapp;
 
 import android.app.Application;
+import android.app.Fragment;
+import android.os.Bundle;
 
+import ua.com.todd.baseapp.fragment.FragmentFactory;
 import ua.com.todd.baseapp.managers.BaseNetworkManager;
 import ua.com.todd.baseapp.managers.BasePreferenceManager;
 
@@ -10,6 +13,7 @@ public class BaseApplication extends Application {
     private static BaseApplication application;
     private BaseNetworkManager networkManager;
     private BasePreferenceManager preferenceManager;
+    private FragmentFactory fragmentFactory;
 
     public static BaseApplication getInstance() {
         return application;
@@ -21,6 +25,11 @@ public class BaseApplication extends Application {
         application = this;
         networkManager = createNetworkManager();
         preferenceManager = createPreferenceManager();
+        fragmentFactory = createFragmentFactory();
+    }
+
+    protected FragmentFactory createFragmentFactory() {
+        return null;
     }
 
     protected BaseNetworkManager createNetworkManager(){
@@ -37,5 +46,9 @@ public class BaseApplication extends Application {
 
     public  <T extends BasePreferenceManager> T getPreferenceManager() {
         return (T) preferenceManager;
+    }
+
+    public FragmentFactory getFragmentFactory() {
+        return fragmentFactory;
     }
 }

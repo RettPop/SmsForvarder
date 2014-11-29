@@ -8,23 +8,16 @@ import android.view.MenuItem
 
 import ua.com.todd.smsforwading.R
 import ua.com.todd.smsforwading.fragment.SettingsFragment
+import ua.com.todd.smsforwading.fragment.ProfileFragment
+import ua.com.todd.baseapp.activity.BaseActivity
+import ua.com.todd.smsforwading.fragment.FragmentFactory.FragmentType
 
 
-public class MainActivity : Activity() {
+public class MainActivity : BaseActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super<Activity>.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        var fragment: Fragment? = getFragmentManager().findFragmentByTag(SettingsFragment.javaClass.getSimpleName())
-        if (fragment == null) {
-            fragment = SettingsFragment.getInstance()
-        }
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container_settings, fragment, SettingsFragment.javaClass.getName())
-                .commit()
+    override fun getActivityLayoutId(): Int {
+        return R.layout.activity_main
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -38,6 +31,7 @@ public class MainActivity : Activity() {
         // as you specify a parent activity in AndroidManifest.xml.
         val id = item.getItemId()
         if (id == R.id.action_settings) {
+            getFragmentLauncher().addFragmentWithStack(FragmentType.SETTINGS)
             return true
         }
         return super.onOptionsItemSelected(item)

@@ -24,9 +24,8 @@ public class SettingsFragment : BaseFragment() {
     private var buttonCancel: Button? = null
     private var buttonOk: Button? = null
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_settings, container, false)
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_settings
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
