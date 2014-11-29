@@ -1,0 +1,17 @@
+package ua.com.todd.smsforwading.fragment
+
+import ua.com.todd.baseapp.fragment.BaseFragment
+import android.app.Fragment
+import ua.com.todd.smsforwading.R
+
+public class ProfileFragment : BaseFragment(){
+    class object {
+        public fun getInstance(): Fragment {
+            return ProfileFragment()
+        }
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.fragment_profile
+    }
+}
