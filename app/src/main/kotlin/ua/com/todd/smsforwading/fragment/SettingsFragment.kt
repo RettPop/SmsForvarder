@@ -7,7 +7,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 
-import ua.com.todd.baseapp.fragment.BaseFragment
+import ua.com.todd.baseapp.ui.fragment.BaseFragment
 import ua.com.todd.smsforwading.R
 import ua.com.todd.smsforwading.managers.PreferenceManager
 import kotlin.properties.Delegates

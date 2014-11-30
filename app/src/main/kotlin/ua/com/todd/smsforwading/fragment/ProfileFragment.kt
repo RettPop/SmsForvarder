@@ -1,6 +1,6 @@
 package ua.com.todd.smsforwading.fragment
 
-import ua.com.todd.baseapp.fragment.BaseFragment
+import ua.com.todd.baseapp.ui.fragment.BaseFragment
 import android.app.Fragment
 import ua.com.todd.smsforwading.R
 

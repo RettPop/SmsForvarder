@@ -1,10 +1,8 @@
 package ua.com.todd.baseapp;
 
 import android.app.Application;
-import android.app.Fragment;
-import android.os.Bundle;
 
-import ua.com.todd.baseapp.fragment.FragmentFactory;
+import ua.com.todd.baseapp.ui.fragment.FragmentFactory;
 import ua.com.todd.baseapp.managers.BaseNetworkManager;
 import ua.com.todd.baseapp.managers.BasePreferenceManager;
 

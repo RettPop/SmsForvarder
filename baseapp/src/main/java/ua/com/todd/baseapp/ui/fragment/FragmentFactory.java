@@ -1,4 +1,4 @@
-package ua.com.todd.baseapp.fragment;
+package ua.com.todd.baseapp.ui.fragment;
 
 import android.app.Fragment;
 import android.os.Bundle;

@@ -1,4 +1,4 @@
-package ua.com.todd.baseapp.fragment;
+package ua.com.todd.baseapp.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import ua.com.todd.baseapp.BaseApplication;
 import ua.com.todd.baseapp.R;
-import ua.com.todd.baseapp.fragment.FragmentFactory.IBaseFragmentType;
+import ua.com.todd.baseapp.ui.fragment.FragmentFactory.IBaseFragmentType;
 
 public class FragmentLauncher {
     private Activity activity;

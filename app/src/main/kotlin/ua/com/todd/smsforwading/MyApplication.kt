@@ -4,7 +4,7 @@ import ua.com.todd.baseapp.BaseApplication
 import ua.com.todd.smsforwading.data.HelperFactory
 import ua.com.todd.smsforwading.managers.PreferenceManager
 import ua.com.todd.baseapp.utils.Log
-import ua.com.todd.baseapp.fragment.FragmentFactory
+import ua.com.todd.baseapp.ui.fragment.FragmentFactory
 
 public class MyApplication : BaseApplication() {
     override fun onCreate() {
