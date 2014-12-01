@@ -13,13 +13,11 @@
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@android:color/holo_green_light" />
+        android:layout_gravity="start" />
 
     <FrameLayout
         android:id="@+id/right_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="end"
-        android:background="@android:color/holo_blue_light"/>
+        android:layout_gravity="end"/>
 </android.support.v4.widget.DrawerLayout>

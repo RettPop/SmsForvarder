@@ -6,22 +6,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.FrameLayout.LayoutParams;
 
 import ua.com.todd.baseapp.R;
 import ua.com.todd.baseapp.ui.menu.config.MenuConfig;
+import ua.com.todd.baseapp.utils.AndroidUtils;
 
 public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private MenuConfig config = new MenuConfig();
-    private View leftMenuContainer;
-    private View rightMenuContainer;
+    private ViewGroup leftMenuContainer;
+    private ViewGroup rightMenuContainer;
 
     public SlideMenu(Activity activity) {
         this(activity, null);
@@ -32,8 +31,8 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
         ViewGroup content = (ViewGroup) activity.findViewById(R.id.menu_container);
         content.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
-        leftMenuContainer = activity.findViewById(R.id.left_drawer);
-        rightMenuContainer = activity.findViewById(R.id.right_drawer);
+        leftMenuContainer = (ViewGroup) activity.findViewById(R.id.left_drawer);
+        rightMenuContainer = (ViewGroup) activity.findViewById(R.id.right_drawer);
         if (toolbar == null) {
             mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout,
                     R.string.drawer_open, R.string.drawer_close) {
@@ -58,6 +57,7 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
         config.refreshConfig();
     }
 
+    @Override
     public MenuConfig getMenuConfig() {
         return config;
     }
@@ -67,27 +67,41 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
         config.setOnRefreshMenuConfig(this);
         setMenuType(config.getMenuType(), this.config.getMenuType());
         this.config = config;
+
+        int idLeft = config.getLeftLayoutId();
+        if (idLeft != 0)
+            AndroidUtils.injectSingleViewInLayout(leftMenuContainer, idLeft);
+        int idRight = config.getRightLayoutId();
+        if (idRight != 0)
+            AndroidUtils.injectSingleViewInLayout(rightMenuContainer, idRight);
+
     }
 
     private void setMenuType(MenuConfig.MenuType newType, MenuConfig.MenuType oldType) {
         switch (oldType) {
             case LEFT:
                 switch (newType) {
+                    case NONE:
                     case RIGHT:
                         mDrawerLayout.removeView(leftMenuContainer);
                     case LEFT_RIGHT:
                         mDrawerLayout.addView(rightMenuContainer);
                         break;
+                    default:
+                        mDrawerLayout.addView(leftMenuContainer);
                 }
                 break;
             case RIGHT:
                 switch (newType) {
+                    case NONE:
                     case LEFT:
                         mDrawerLayout.removeView(rightMenuContainer);
                         break;
                     case LEFT_RIGHT:
                         mDrawerLayout.addView(leftMenuContainer);
                         break;
+                    default:
+                        mDrawerLayout.addView(rightMenuContainer);
                 }
                 break;
             case LEFT_RIGHT:
@@ -95,9 +109,29 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
                     case LEFT:
                         mDrawerLayout.removeView(rightMenuContainer);
                         break;
+                    case NONE:
+                        mDrawerLayout.removeView(rightMenuContainer);
                     case RIGHT:
                         mDrawerLayout.removeView(leftMenuContainer);
                         break;
+                    default:
+                        mDrawerLayout.addView(rightMenuContainer);
+                        mDrawerLayout.addView(leftMenuContainer);
+                }
+                break;
+            case NONE:
+                switch (newType) {
+                    case LEFT:
+                        mDrawerLayout.addView(leftMenuContainer);
+                        break;
+                    case LEFT_RIGHT:
+                        mDrawerLayout.removeView(leftMenuContainer);
+                    case RIGHT:
+                        mDrawerLayout.removeView(rightMenuContainer);
+                        break;
+                    default:
+                        mDrawerLayout.removeView(rightMenuContainer);
+                        mDrawerLayout.removeView(leftMenuContainer);
                 }
                 break;
         }
@@ -116,10 +150,16 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
         if (isMenuOpen()) {
             closeMenu();
         } else {
-            if (config.getMenuType() == MenuConfig.MenuType.RIGHT)
-                mDrawerLayout.openDrawer(Gravity.END);
-            else
-                mDrawerLayout.openDrawer(Gravity.START);
+            switch (config.getMenuType()) {
+
+                case RIGHT:
+                    mDrawerLayout.openDrawer(Gravity.END);
+                    break;
+                case LEFT_RIGHT:
+                case LEFT:
+                    mDrawerLayout.openDrawer(Gravity.START);
+                    break;
+            }
         }
     }
 

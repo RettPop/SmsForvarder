@@ -12,10 +12,11 @@ import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import ua.com.todd.baseapp.R;
+import ua.com.todd.baseapp.ui.menu.ISlideMenu;
 import ua.com.todd.baseapp.ui.menu.SlideMenu;
 import ua.com.todd.baseapp.ui.menu.config.MenuConfig;
 
-public abstract class SlideMenuBaseActivity extends BaseActivity {
+public class SlideMenuBaseActivity extends BaseActivity implements ISlideMenu {
 
     private SlideMenu slideMenu;
 
@@ -51,4 +52,54 @@ public abstract class SlideMenuBaseActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
         slideMenu.onConfigurationChanged(newConfig);
      }
+
+    @Override
+    public void toggle() {
+        slideMenu.toggle();
+    }
+
+    @Override
+    public void openLeftMenu() {
+        slideMenu.openLeftMenu();
+    }
+
+    @Override
+    public void openRightMenu() {
+        slideMenu.openRightMenu();
+    }
+
+    @Override
+    public void closeLeftMenu() {
+        slideMenu.closeLeftMenu();
+    }
+
+    @Override
+    public void closeRightMenu() {
+        slideMenu.closeRightMenu();
+    }
+
+    @Override
+    public void closeMenu() {
+        slideMenu.closeMenu();
+    }
+
+    @Override
+    public boolean isLeftMenuOpen() {
+        return slideMenu.isLeftMenuOpen();
+    }
+
+    @Override
+    public boolean isRightMenuOpen() {
+        return slideMenu.isRightMenuOpen();
+    }
+
+    @Override
+    public boolean isMenuOpen() {
+        return slideMenu.isMenuOpen();
+    }
+
+    @Override
+    public MenuConfig getMenuConfig() {
+        return slideMenu.getMenuConfig();
+    }
 }

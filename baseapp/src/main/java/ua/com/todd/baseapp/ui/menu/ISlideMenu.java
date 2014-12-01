@@ -1,5 +1,7 @@
 package ua.com.todd.baseapp.ui.menu;
 
+import ua.com.todd.baseapp.ui.menu.config.MenuConfig;
+
 public interface ISlideMenu {
     public void toggle();
 
@@ -18,4 +20,6 @@ public interface ISlideMenu {
     public boolean isRightMenuOpen();
 
     public boolean isMenuOpen();
+
+    public MenuConfig getMenuConfig();
 }
