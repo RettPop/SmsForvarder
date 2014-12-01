@@ -7,7 +7,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.FrameLayout;
 
 import ua.com.todd.baseapp.R;
 import ua.com.todd.baseapp.ui.menu.SlideMenu;
@@ -20,7 +22,12 @@ public abstract class SlideMenuBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        slideMenu = new SlideMenu(this, getActivityLayoutId(), getToolbar());
+        slideMenu = new SlideMenu(this, getToolbar());
+    }
+
+    @Override
+    void setBaseContentView(int layoutResID) {
+        super.setBaseContentView(R.layout.menu_container);
     }
 
     @Override
@@ -44,6 +51,4 @@ public abstract class SlideMenuBaseActivity extends BaseActivity {
         super.onConfigurationChanged(newConfig);
         slideMenu.onConfigurationChanged(newConfig);
      }
-
-    protected abstract int getActivityLayoutId();
 }

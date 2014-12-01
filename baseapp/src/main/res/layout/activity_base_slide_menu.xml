@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ViewStub
+    <FrameLayout
         android:id="@+id/base_slide_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -3,6 +3,8 @@ package ua.com.todd.baseapp.ui.activity;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
 
 import ua.com.todd.baseapp.R;
@@ -16,13 +18,17 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setContentView(R.layout.activity_base);
+        Class<?> cls = getClass();
+        LayoutId annotations = cls.getAnnotation(LayoutId.class);
+        if(annotations == null)
+            throw new RuntimeException("Activity must contain LayoutId annotation");
+        setBaseContentView(annotations.id());
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 
-    @Override
-    public void setContentView(int layoutResID) {
+    void setBaseContentView(int layoutResID) {
+        super.setContentView(R.layout.activity_base);
         ViewStub viewStub = (ViewStub) findViewById(R.id.base_content);
         viewStub.setLayoutResource(layoutResID);
         viewStub.inflate();
@@ -39,5 +45,20 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    @Override
+    final public void setContentView(int layoutResID) {
+        throw new RuntimeException("Activity must use LayoutId annotations");
+    }
+
+    @Override
+    final public void setContentView(View view) {
+        throw new RuntimeException("Activity must use LayoutId annotations");
+    }
+
+    @Override
+    final public void setContentView(View view, ViewGroup.LayoutParams params) {
+        throw new RuntimeException("Activity must use LayoutId annotations");
     }
 }

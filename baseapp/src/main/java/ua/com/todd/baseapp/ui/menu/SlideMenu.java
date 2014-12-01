@@ -6,8 +6,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
+import android.widget.FrameLayout.LayoutParams;
 
 import ua.com.todd.baseapp.R;
 import ua.com.todd.baseapp.ui.menu.config.MenuConfig;
@@ -20,27 +23,37 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
     private View leftMenuContainer;
     private View rightMenuContainer;
 
-    public SlideMenu(Activity activity, int layoutResID, Toolbar toolbar) {
-        activity.setContentView(R.layout.activity_base_slide_menu);
-        ViewStub viewStub = (ViewStub) activity.findViewById(R.id.base_slide_content);
-        viewStub.setLayoutResource(layoutResID);
-        viewStub.inflate();
+    public SlideMenu(Activity activity) {
+        this(activity, null);
+    }
+
+    public SlideMenu(Activity activity, Toolbar toolbar) {
+        View view = View.inflate(activity, R.layout.activity_base_slide_menu, null);
+        ViewGroup content = (ViewGroup) activity.findViewById(R.id.menu_container);
+        content.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         leftMenuContainer = activity.findViewById(R.id.left_drawer);
         rightMenuContainer = activity.findViewById(R.id.right_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout, toolbar,
-                R.string.drawer_open, R.string.drawer_close) {
+        if (toolbar == null) {
+            mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout,
+                    R.string.drawer_open, R.string.drawer_close) {
 
-        };
+            };
+        } else {
+            mDrawerToggle = new ActionBarDrawerToggle(activity, mDrawerLayout, toolbar,
+                    R.string.drawer_open, R.string.drawer_close) {
+
+            };
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    toggle();
+                }
+            });
+        }
 
         // Set the drawer toggle as the DrawerListener
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toggle();
-            }
-        });
         config.setOnRefreshMenuConfig(this);
         config.refreshConfig();
     }
