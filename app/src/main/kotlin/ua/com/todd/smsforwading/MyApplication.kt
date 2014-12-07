@@ -5,6 +5,7 @@ import ua.com.todd.smsforwading.data.HelperFactory
 import ua.com.todd.smsforwading.managers.PreferenceManager
 import ua.com.todd.baseapp.utils.Log
 import ua.com.todd.baseapp.ui.fragment.FragmentFactory
+import ua.com.todd.baseapp.ui.menu.IMenuFactory
 
 public class MyApplication : BaseApplication() {
     override fun onCreate() {
@@ -23,4 +24,8 @@ public class MyApplication : BaseApplication() {
     }
 
     override fun createFragmentFactory(): FragmentFactory = ua.com.todd.smsforwading.fragment.FragmentFactory();
+
+    override fun getMenuFactory(): IMenuFactory? {
+        return MenuFactory()
+    }
 }

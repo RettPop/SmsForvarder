@@ -45,5 +45,5 @@ build/
 .project
 project.properties
 obj
-
+*.hprof
 

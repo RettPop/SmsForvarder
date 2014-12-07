@@ -11,7 +11,7 @@ import ua.com.todd.baseapp.ui.fragment.FragmentFactory.IBaseFragmentType;
 
 public class FragmentLauncher {
     private Activity activity;
-    private BaseApplication app = BaseApplication.getInstance();
+    private BaseApplication app = BaseApplication.app();
     private FragmentFactory fragmentFactory = app.getFragmentFactory();
 
     public FragmentLauncher(Activity activity) {

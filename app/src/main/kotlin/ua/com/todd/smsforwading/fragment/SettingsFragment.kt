@@ -12,7 +12,9 @@ import ua.com.todd.smsforwading.R
 import ua.com.todd.smsforwading.managers.PreferenceManager
 import kotlin.properties.Delegates
 import java.util.ArrayList
+import ua.com.todd.baseapp.ui.activity.LayoutId
 
+[LayoutId(R.layout.fragment_settings)]
 public class SettingsFragment : BaseFragment() {
 
     private var host: String by Delegates.notNull()
@@ -22,8 +24,6 @@ public class SettingsFragment : BaseFragment() {
 
     private var buttonCancel: Button by Delegates.notNull()
     private var buttonOk: Button by Delegates.notNull()
-
-    override fun getLayoutId(): Int = R.layout.fragment_settings
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

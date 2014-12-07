@@ -10,7 +10,7 @@ import ua.com.todd.baseapp.BaseApplication;
 
 public class AndroidUtils {
 
-    private static BaseApplication app = BaseApplication.getInstance();
+    private static BaseApplication app = BaseApplication.app();
 
     public static void injectSingleViewInLayout(ViewGroup viewGroup, int id) {
         if (viewGroup.getChildCount() > 1) {
