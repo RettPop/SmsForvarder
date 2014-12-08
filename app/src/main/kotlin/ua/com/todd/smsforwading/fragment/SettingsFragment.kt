@@ -16,7 +16,6 @@ import ua.com.todd.baseapp.ui.activity.LayoutId
 
 [LayoutId(R.layout.fragment_settings)]
 public class SettingsFragment : BaseFragment() {
-
     private var host: String by Delegates.notNull()
     private var port: String by Delegates.notNull()
     private var email: String by Delegates.notNull()

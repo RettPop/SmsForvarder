@@ -100,7 +100,7 @@ public class FragmentLauncher {
                 break;
         }
         if (backStack)
-            transaction.addToBackStack(null);
+            transaction.addToBackStack(type.toString());
         transaction.commit();
     }
 

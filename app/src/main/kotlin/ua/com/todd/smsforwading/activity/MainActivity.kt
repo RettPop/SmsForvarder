@@ -9,6 +9,8 @@ import de.greenrobot.event.EventBus
 import ua.com.todd.smsforwading.model.MenuEvent
 import ua.com.todd.smsforwading.MenuItemType
 import ua.com.todd.smsforwading.fragment.FragmentFactory
+import ua.com.todd.smsforwading.fragment.ProfileFragment
+import ua.com.todd.smsforwading.fragment.SettingsFragment
 
 [LayoutId(R.layout.activity_main)]
 public class MainActivity : SlideMenuBaseActivity() {

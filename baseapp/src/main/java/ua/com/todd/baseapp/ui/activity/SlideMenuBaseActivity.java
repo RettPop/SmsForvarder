@@ -2,14 +2,8 @@ package ua.com.todd.baseapp.ui.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.FrameLayout;
 
 import ua.com.todd.baseapp.R;
 import ua.com.todd.baseapp.ui.menu.ISlideMenu;
@@ -29,6 +23,9 @@ public class SlideMenuBaseActivity extends BaseActivity implements ISlideMenu {
     @Override
     void setBaseContentView(int layoutResID) {
         super.setBaseContentView(R.layout.menu_container);
+        ViewStub viewStub = (ViewStub) findViewById(R.id.base_menu_content);
+        viewStub.setLayoutResource(layoutResID);
+        viewStub.inflate();
     }
 
     @Override
@@ -52,6 +49,16 @@ public class SlideMenuBaseActivity extends BaseActivity implements ISlideMenu {
         super.onConfigurationChanged(newConfig);
         slideMenu.onConfigurationChanged(newConfig);
      }
+
+    @Override
+    public void onBackPressed()
+    {
+        if (isMenuOpen()) {
+            toggle();
+        } else {
+            super.onBackPressed();
+        }
+    }
 
     @Override
     public void toggle() {

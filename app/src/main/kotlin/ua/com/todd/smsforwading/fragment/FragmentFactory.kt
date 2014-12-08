@@ -7,10 +7,12 @@ import ua.com.todd.baseapp.ui.fragment
 
 public class FragmentFactory : fragment.FragmentFactory() {
     override fun getFragment(type: IBaseFragmentType, bundle: Bundle?) = when (type as FragmentType) {
-        FragmentType.SETTINGS -> SettingsFragment()
+        FragmentType.SETTINGS -> SettingsFragment.getInstance()
+        FragmentType.PROFILE -> ProfileFragment.getInstance()
     }
 
     public enum class FragmentType : IBaseFragmentType {
         SETTINGS
+        PROFILE
     }
 }
