@@ -11,6 +11,7 @@ import android.widget.TextView
 public class MenuFactory : IMenuFactory {
     override fun getMenuAdapter(context: Context): ListAdapter? {
         val items = listOf(
+                MenuItem(MenuItemType.PROFILE, "Profile"),
                 MenuItem(MenuItemType.SETTINGS, "Settings"),
                 MenuItem(MenuItemType.ABOUT, "About program"))
         return MenuAdapter(context, items)
@@ -20,15 +21,18 @@ public class MenuFactory : IMenuFactory {
 public enum class MenuItemType(val id: Long) {
     SETTINGS : MenuItemType(SETTINGS_ID)
     ABOUT : MenuItemType(ABOUT_ID)
+    PROFILE : MenuItemType(PROFILE_ID)
 
     class object {
 
-        private val SETTINGS_ID : Long = 1
-        private val ABOUT_ID : Long = 2
+        private val PROFILE_ID : Long = 1
+        private val SETTINGS_ID : Long = 2
+        private val ABOUT_ID : Long = 3
 
         public fun getType(id: Long): MenuItemType = when (id) {
             SETTINGS_ID -> MenuItemType.SETTINGS
             ABOUT_ID -> MenuItemType.ABOUT
+            PROFILE_ID -> MenuItemType.PROFILE
             else -> throw RuntimeException("Invalid id value for MenuItemType")
         }
     }

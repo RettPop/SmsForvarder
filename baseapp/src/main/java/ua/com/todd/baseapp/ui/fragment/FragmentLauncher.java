@@ -13,6 +13,7 @@ public class FragmentLauncher {
     private Activity activity;
     private BaseApplication app = BaseApplication.app();
     private FragmentFactory fragmentFactory = app.getFragmentFactory();
+    private String currFragmentName = "";
 
     public FragmentLauncher(Activity activity) {
         this.activity = activity;
@@ -83,6 +84,9 @@ public class FragmentLauncher {
     }
 
     private void launchFragment(int containerId, IBaseFragmentType type, boolean backStack, LaunchType launchType, Bundle bundle) {
+        String name = type.toString();
+        if (name.equals(currFragmentName))
+            return;
         Fragment fragment = activity.getFragmentManager().findFragmentByTag(type.toString());
         if (fragment == null) {
             fragment = fragmentFactory.getFragment(type, bundle);
@@ -92,16 +96,18 @@ public class FragmentLauncher {
 
             case ADD:
                 transaction.add(containerId == 0 ? R.id.container : containerId,
-                        fragment, type.toString());
+                        fragment, name);
                 break;
             case REPLACE:
                 transaction.replace(containerId == 0 ? R.id.container : containerId,
-                        fragment, type.toString());
+                        fragment, name);
                 break;
         }
         if (backStack)
-            transaction.addToBackStack(type.toString());
+            transaction.addToBackStack(name);
+        currFragmentName = name;
         transaction.commit();
+
     }
 
     enum LaunchType {

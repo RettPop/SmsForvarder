@@ -9,8 +9,6 @@ import de.greenrobot.event.EventBus
 import ua.com.todd.smsforwading.model.MenuEvent
 import ua.com.todd.smsforwading.MenuItemType
 import ua.com.todd.smsforwading.fragment.FragmentFactory
-import ua.com.todd.smsforwading.fragment.ProfileFragment
-import ua.com.todd.smsforwading.fragment.SettingsFragment
 
 [LayoutId(R.layout.activity_main)]
 public class MainActivity : SlideMenuBaseActivity() {
@@ -20,6 +18,8 @@ public class MainActivity : SlideMenuBaseActivity() {
                 .setLeftLayoutId(R.layout.layout_menu)
                 .setMenuType(MenuConfig.MenuType.LEFT)
                 .refreshConfig()
+        getFragmentLauncher()
+                .addFragment(FragmentFactory.FragmentType.PROFILE)
     }
 
     override fun onResume() {
@@ -38,6 +38,11 @@ public class MainActivity : SlideMenuBaseActivity() {
                 closeMenu()
                 getFragmentLauncher()
                         .addFragmentWithStack(FragmentFactory.FragmentType.SETTINGS)
+            }
+            MenuItemType.PROFILE -> {
+                closeMenu()
+                getFragmentLauncher()
+                        .addFragmentWithStack(FragmentFactory.FragmentType.PROFILE)
             }
         }
     }
