@@ -14,10 +14,10 @@ public class IncomingSmsBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         val bundle = intent.getExtras()
         if (bundle != null) {
-            val pdus = bundle.get("pdus") as Array<ByteArray>
+            val pdus = bundle.get("pdus") as Array<Any>
             val messages = arrayOfNulls<SmsMessage>(pdus.size)
             for (i in pdus.indices) {
-                messages[i] = SmsMessage.createFromPdu(pdus[i])
+                messages[i] = SmsMessage.createFromPdu(pdus[i] as ByteArray)
             }
             if (messages.size > 0) {
                 val sb = StringBuilder()
