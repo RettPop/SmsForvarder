@@ -41,8 +41,7 @@ public class MainActivity : SlideMenuBaseActivity() {
             }
             MenuItemType.PROFILE -> {
                 closeMenu()
-                getFragmentLauncher()
-                        .addFragmentWithStack(FragmentFactory.FragmentType.PROFILE)
+                getFragmentLauncher().clearStack()
             }
         }
     }

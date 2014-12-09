@@ -2,8 +2,15 @@ package ua.com.todd.baseapp.ui.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.Stack;
 
 import ua.com.todd.baseapp.BaseApplication;
 import ua.com.todd.baseapp.R;
@@ -13,9 +20,10 @@ public class FragmentLauncher {
     private Activity activity;
     private BaseApplication app = BaseApplication.app();
     private FragmentFactory fragmentFactory = app.getFragmentFactory();
-    private String currFragmentName = "";
+    private LinkedList<String> names = new LinkedList<String>();
 
     public FragmentLauncher(Activity activity) {
+        names.push("");
         this.activity = activity;
     }
 
@@ -83,9 +91,19 @@ public class FragmentLauncher {
         launchFragment(containerId, type, true, LaunchType.REPLACE, bundle);
     }
 
+    public FragmentLauncher clearStack(){
+        FragmentManager fm = activity.getFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            names.pop();
+            fm.popBackStack();
+        }
+        return this;
+    }
+
     private void launchFragment(int containerId, IBaseFragmentType type, boolean backStack, LaunchType launchType, Bundle bundle) {
         String name = type.toString();
-        if (name.equals(currFragmentName))
+        String topFragmentName = names.getFirst();
+        if (name.equals(topFragmentName))
             return;
         Fragment fragment = activity.getFragmentManager().findFragmentByTag(type.toString());
         if (fragment == null) {
@@ -105,9 +123,9 @@ public class FragmentLauncher {
         }
         if (backStack)
             transaction.addToBackStack(name);
-        currFragmentName = name;
+        names.remove(name);
+        names.push(name);
         transaction.commit();
-
     }
 
     enum LaunchType {
