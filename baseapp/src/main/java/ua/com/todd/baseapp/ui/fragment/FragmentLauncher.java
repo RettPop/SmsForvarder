@@ -128,6 +128,17 @@ public class FragmentLauncher {
         transaction.commit();
     }
 
+    public boolean back(){
+        if (activity.getFragmentManager().getBackStackEntryCount() > 0) {
+            activity.getFragmentManager().popBackStack();
+            names.pop();
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     enum LaunchType {
         ADD, REPLACE
     }
