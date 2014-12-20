@@ -3,6 +3,7 @@ package ua.com.todd.baseapp.ui.menu.config;
 public class MenuConfig {
     private OnRefreshMenuConfig onRefreshMenuConfig;
     private MenuType menuType = MenuType.NONE;
+    private ToolbarType toolbarType = ToolbarType.DEFAULT;
     private int leftLayoutId;
     private int rightLayoutId;
 
@@ -42,8 +43,21 @@ public class MenuConfig {
         return this;
     }
 
+    public MenuConfig setToolbarType(ToolbarType toolbarType) {
+        this.toolbarType = toolbarType;
+        return this;
+    }
+
+    public ToolbarType getToolbarType() {
+        return toolbarType;
+    }
+
     public enum MenuType {
         LEFT, RIGHT, LEFT_RIGHT, NONE
+    }
+
+    public enum ToolbarType {
+        UP, UP_BTB, DOWN, DOWN_BTB, DEFAULT
     }
 
     public interface OnRefreshMenuConfig {

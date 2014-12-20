@@ -23,7 +23,7 @@ public class SlideMenuBaseActivity extends BaseActivity implements ISlideMenu {
     @Override
     void setBaseContentView(int layoutResID) {
         super.setBaseContentView(R.layout.menu_container);
-        ViewStub viewStub = (ViewStub) findViewById(R.id.base_menu_content);
+        ViewStub viewStub = (ViewStub) findViewById(R.id.menu_content);
         viewStub.setLayoutResource(layoutResID);
         viewStub.inflate();
     }

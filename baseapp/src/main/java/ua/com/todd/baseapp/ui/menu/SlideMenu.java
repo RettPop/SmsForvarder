@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 
 import ua.com.todd.baseapp.R;
@@ -21,15 +22,25 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
     private MenuConfig config = new MenuConfig();
     private ViewGroup leftMenuContainer;
     private ViewGroup rightMenuContainer;
+    private Activity activity;
+    private Toolbar toolbar;
+    private ViewGroup content;
+    private ViewGroup baseMenuContent;
 
     public SlideMenu(Activity activity) {
         this(activity, null);
     }
 
     public SlideMenu(Activity activity, Toolbar toolbar) {
+        this.activity = activity;
+        this.toolbar = toolbar;
         View view = View.inflate(activity, R.layout.activity_base_slide_menu, null);
-        ViewGroup content = (ViewGroup) activity.findViewById(R.id.menu_container);
+        content = (ViewGroup) activity.findViewById(android.R.id.content);
+        View contentView = content.getChildAt(0);
+        content.removeView(contentView);
         content.addView(view, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+        baseMenuContent = (ViewGroup) view.findViewById(R.id.base_menu_content);
+        baseMenuContent.addView(contentView);
         mDrawerLayout = (DrawerLayout) activity.findViewById(R.id.drawer_layout);
         leftMenuContainer = (ViewGroup) activity.findViewById(R.id.left_drawer);
         rightMenuContainer = (ViewGroup) activity.findViewById(R.id.right_drawer);
@@ -63,7 +74,7 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
     }
 
     @Override
-    public void setMenuConfig(MenuConfig config) {
+    public void setMenuConfig(final MenuConfig config) {
         config.setOnRefreshMenuConfig(this);
         setMenuType(config.getMenuType(), this.config.getMenuType());
         this.config = config;
@@ -74,7 +85,42 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
         int idRight = config.getRightLayoutId();
         if (idRight != 0)
             AndroidUtils.injectSingleViewInLayout(rightMenuContainer, idRight);
-
+        if (toolbar != null && config.getToolbarType() != MenuConfig.ToolbarType.DEFAULT) {
+            toolbar.measure(
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                    View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+            toolbar.layout(0, 0,
+                    toolbar.getMeasuredWidth(),
+                    toolbar.getMeasuredHeight());
+            ((ViewGroup) toolbar.getParent()).removeView(toolbar);
+            FrameLayout toolbarContainer = (FrameLayout) activity.findViewById(R.id.base_toolbar);
+            FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                    toolbar.getLayoutParams().width, toolbar.getLayoutParams().height
+            );
+            DrawerLayout.LayoutParams baseLayout = (DrawerLayout.LayoutParams) baseMenuContent.getLayoutParams();
+            DrawerLayout.LayoutParams leftLayout = (DrawerLayout.LayoutParams) leftMenuContainer.getLayoutParams();
+            DrawerLayout.LayoutParams rightLayout = (DrawerLayout.LayoutParams) rightMenuContainer.getLayoutParams();
+            switch (config.getToolbarType()) {
+                case UP_BTB:
+                    baseLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
+                case UP:
+                    layoutParams.gravity = Gravity.TOP;
+                    leftLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
+                    rightLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
+                    toolbarContainer.addView(toolbar, layoutParams);
+                    break;
+                case DOWN_BTB:
+                    baseLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
+                case DOWN:
+                    layoutParams.gravity = Gravity.BOTTOM;
+                    leftLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
+                    rightLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
+                    toolbarContainer.addView(toolbar, layoutParams);
+                    break;
+                case DEFAULT:
+                    break;
+            }
+        }
     }
 
     private void setMenuType(MenuConfig.MenuType newType, MenuConfig.MenuType oldType) {

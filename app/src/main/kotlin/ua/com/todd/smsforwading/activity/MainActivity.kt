@@ -17,6 +17,7 @@ public class MainActivity : SlideMenuBaseActivity() {
         getMenuConfig()
                 .setLeftLayoutId(R.layout.layout_menu)
                 .setMenuType(MenuConfig.MenuType.LEFT)
+                .setToolbarType(MenuConfig.ToolbarType.UP_BTB)
                 .refreshConfig()
         getFragmentLauncher()
                 .addFragment(FragmentFactory.FragmentType.PROFILE)
