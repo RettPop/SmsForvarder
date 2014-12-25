@@ -9,11 +9,17 @@ import de.greenrobot.event.EventBus
 import ua.com.todd.smsforwading.model.MenuEvent
 import ua.com.todd.smsforwading.MenuItemType
 import ua.com.todd.smsforwading.fragment.FragmentFactory
+import android.widget.Button
+import android.widget.Switch
+import ua.com.todd.smsforwading.MyApplication
+import ua.com.todd.smsforwading.managers.PreferenceManager
+import android.view.Menu
 
 [LayoutId(R.layout.activity_main)]
 public class MainActivity : SlideMenuBaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super<SlideMenuBaseActivity>.onCreate(savedInstanceState)
+        val pref = MyApplication.app().getPreferenceManager<PreferenceManager>()
         getMenuConfig()
                 .setLeftLayoutId(R.layout.layout_menu)
                 .setMenuType(MenuConfig.MenuType.LEFT)
@@ -21,6 +27,12 @@ public class MainActivity : SlideMenuBaseActivity() {
                 .refreshConfig()
         getFragmentLauncher()
                 .addFragment(FragmentFactory.FragmentType.PROFILE)
+        addToolbarView(R.layout.toolbar_view)
+        val isEnable = pref.isEnabled()
+        val switch = findViewById(R.id.switch_enable) as Switch
+        switch.setChecked(isEnable)
+        switch.setOnCheckedChangeListener { (compoundButton, b) ->
+            pref.storeEnabled(b)}
     }
 
     override fun onResume() {

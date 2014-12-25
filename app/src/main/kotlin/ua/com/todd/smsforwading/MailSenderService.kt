@@ -30,7 +30,8 @@ public class MailSenderService : IntentService(javaClass<MailSenderService>().ge
     }
 
     override fun onHandleIntent(intent: Intent) {
-        if (Utils.isNotNull(login, pass, host, port))
+        val pref = MyApplication.app().getPreferenceManager<PreferenceManager>()
+        if (pref.isEnabled() && Utils.isNotNull(login, pass, host, port))
             try {
                 val smsList = HelperFactory.getHelper().getSmsDAO()?.getAllSms()
                 if (!smsList!!.empty) with(SimpleEmail()) {

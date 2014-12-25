@@ -102,19 +102,19 @@ public class SlideMenu implements ISlideMenu, MenuConfig.OnRefreshMenuConfig {
             DrawerLayout.LayoutParams rightLayout = (DrawerLayout.LayoutParams) rightMenuContainer.getLayoutParams();
             switch (config.getToolbarType()) {
                 case UP_BTB:
-                    baseLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
+                    baseLayout.setMargins(0, toolbar.getHeight(), 0, 0);
                 case UP:
                     layoutParams.gravity = Gravity.TOP;
-                    leftLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
-                    rightLayout.setMargins(0, toolbar.getMeasuredHeight(), 0, 0);
+                    leftLayout.setMargins(0, toolbar.getHeight(), 0, 0);
+                    rightLayout.setMargins(0, toolbar.getHeight(), 0, 0);
                     toolbarContainer.addView(toolbar, layoutParams);
                     break;
                 case DOWN_BTB:
-                    baseLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
+                    baseLayout.setMargins(0, 0, 0, toolbar.getHeight());
                 case DOWN:
                     layoutParams.gravity = Gravity.BOTTOM;
-                    leftLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
-                    rightLayout.setMargins(0, 0, 0, toolbar.getMeasuredHeight());
+                    leftLayout.setMargins(0, 0, 0, toolbar.getHeight());
+                    rightLayout.setMargins(0, 0, 0, toolbar.getHeight());
                     toolbarContainer.addView(toolbar, layoutParams);
                     break;
                 case DEFAULT:

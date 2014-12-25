@@ -10,7 +10,12 @@ public class PreferenceManager(app: MyApplication) : BasePreferenceManager<MyApp
         PASS
         PORT
         HOST
+        IS_ENABLED
     }
+
+    public fun storeEnabled(b : Boolean):Unit = storeValue(Keys.IS_ENABLED, b)
+
+    public fun isEnabled(): Boolean = restoreBoolean(Keys.IS_ENABLED)
 
     public fun storeEmail(str: String): Unit = storeValue(Keys.EMAIL, str)
 

@@ -27,6 +27,10 @@ public abstract class BaseActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
     }
 
+    public void addToolbarView(int layoutId){
+        View.inflate(this, layoutId, toolbar);
+    }
+
     void setBaseContentView(int layoutResID) {
         super.setContentView(R.layout.activity_base);
         ViewStub viewStub = (ViewStub) findViewById(R.id.base_content);
