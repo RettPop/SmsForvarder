@@ -35,26 +35,17 @@ public class MainActivity : SlideMenuBaseActivity() {
             pref.storeEnabled(b)}
     }
 
-    override fun onResume() {
-        super<SlideMenuBaseActivity>.onResume()
-        EventBus.getDefault().register(this)
-    }
-
-    override fun onPause() {
-        super<SlideMenuBaseActivity>.onPause()
-        EventBus.getDefault().unregister(this)
-    }
-
     public fun onEvent(event: MenuEvent) {
         when (MenuItemType.getType(event.id)) {
             MenuItemType.SETTINGS -> {
                 closeMenu()
                 getFragmentLauncher()
-                        .addFragmentWithStack(FragmentFactory.FragmentType.SETTINGS)
+                        .replaceFragment(FragmentFactory.FragmentType.SETTINGS)
             }
             MenuItemType.PROFILE -> {
                 closeMenu()
-                getFragmentLauncher().clearStack()
+                getFragmentLauncher()
+                        .replaceFragment(FragmentFactory.FragmentType.PROFILE)
             }
         }
     }

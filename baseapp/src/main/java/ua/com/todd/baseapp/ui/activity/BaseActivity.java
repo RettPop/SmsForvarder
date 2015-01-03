@@ -7,10 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 
+import de.greenrobot.event.EventBus;
 import ua.com.todd.baseapp.R;
+import ua.com.todd.baseapp.model.OnBackPressedEvent;
+import ua.com.todd.baseapp.model.OnBackPressedResponseEvent;
 import ua.com.todd.baseapp.ui.fragment.FragmentLauncher;
+import ua.com.todd.baseapp.utils.Log;
 
 public abstract class BaseActivity extends ActionBarActivity {
+
+    final protected Log LOG = new Log(getClass());
+
 
     private FragmentLauncher fragmentLauncher = new FragmentLauncher(this);
     private Toolbar toolbar;
@@ -18,6 +25,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EventBus.getDefault().register(this);
         Class<?> cls = getClass();
         LayoutId annotations = cls.getAnnotation(LayoutId.class);
         if(annotations == null)
@@ -40,6 +48,14 @@ public abstract class BaseActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed(){
+        EventBus.getDefault().post(new OnBackPressedEvent());
+    }
+
+    public void onEvent(OnBackPressedResponseEvent e){
+        onBack();
+    }
+
+    private void onBack(){
         if (!getFragmentLauncher().back()) {
             super.onBackPressed();
         }
@@ -48,6 +64,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     public FragmentLauncher getFragmentLauncher() {

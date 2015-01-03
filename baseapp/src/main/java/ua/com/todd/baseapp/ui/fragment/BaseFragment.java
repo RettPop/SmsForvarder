@@ -3,20 +3,35 @@ package ua.com.todd.baseapp.ui.fragment;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidquery.AQuery;
 
+import de.greenrobot.event.EventBus;
 import ua.com.todd.baseapp.BaseApplication;
 import ua.com.todd.baseapp.managers.BasePreferenceManager;
+import ua.com.todd.baseapp.model.OnBackPressedEvent;
+import ua.com.todd.baseapp.model.OnBackPressedResponseEvent;
 import ua.com.todd.baseapp.ui.activity.BaseActivity;
 import ua.com.todd.baseapp.ui.activity.LayoutId;
+import ua.com.todd.baseapp.utils.Log;
 
 public abstract class BaseFragment extends Fragment {
     private AQuery aQuery;
     private BaseApplication app;
+    private BaseActivity baseActivity;
+    final protected Log LOG = new Log(getClass());
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        EventBus.getDefault().register(this);
+        if (activity instanceof BaseActivity)
+            baseActivity = (BaseActivity) activity;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,17 @@ public abstract class BaseFragment extends Fragment {
         aQuery = new AQuery(getActivity(), view);
     }
 
+    protected void onBackPressed(){
+    }
+
+    protected void onBack(){
+        EventBus.getDefault().post(new OnBackPressedResponseEvent());
+    }
+
+    public void onEvent(OnBackPressedEvent e){
+        onBackPressed();
+    }
+
     public <T extends BaseApplication> T getApp() {
         return (T) app;
     }
@@ -48,5 +74,15 @@ public abstract class BaseFragment extends Fragment {
 
     public AQuery getAQuery() {
         return aQuery;
+    }
+
+    public BaseActivity getBaseActivity() {
+        return baseActivity;
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        EventBus.getDefault().unregister(this);
     }
 }

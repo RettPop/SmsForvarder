@@ -90,6 +90,10 @@ public class SettingsFragment : BaseFragment() {
         w(etHost, etPort, etMail, etPass) {addTextChangedListener(textWatcher)}
     }
 
+    override fun onBackPressed() {
+        onBack()
+    }
+
     class object {
         public fun getInstance(): Fragment = SettingsFragment()
     }

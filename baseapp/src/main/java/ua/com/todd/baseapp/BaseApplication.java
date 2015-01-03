@@ -2,9 +2,9 @@ package ua.com.todd.baseapp;
 
 import android.app.Application;
 
-import ua.com.todd.baseapp.ui.fragment.FragmentFactory;
 import ua.com.todd.baseapp.managers.BaseNetworkManager;
 import ua.com.todd.baseapp.managers.BasePreferenceManager;
+import ua.com.todd.baseapp.ui.fragment.FragmentFactory;
 import ua.com.todd.baseapp.ui.menu.IMenuFactory;
 
 public class BaseApplication extends Application {
@@ -37,19 +37,19 @@ public class BaseApplication extends Application {
         return null;
     }
 
-    protected BaseNetworkManager createNetworkManager(){
+    protected BaseNetworkManager createNetworkManager() {
         return new BaseNetworkManager(this);
     }
 
-    public  <T extends BaseNetworkManager> T getNetworkManager() {
+    public <T extends BaseNetworkManager> T getNetworkManager() {
         return (T) networkManager;
     }
 
-    protected BasePreferenceManager createPreferenceManager(){
+    protected BasePreferenceManager createPreferenceManager() {
         return new BasePreferenceManager(this);
     }
 
-    public  <T extends BasePreferenceManager> T getPreferenceManager() {
+    public <T extends BasePreferenceManager> T getPreferenceManager() {
         return (T) preferenceManager;
     }
 

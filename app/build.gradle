@@ -37,7 +37,7 @@ dependencies {
     compile 'de.greenrobot:eventbus:2.4.0'
 }
 buildscript {
-    ext.kotlin_version = '0.9.976'
+    ext.kotlin_version = '0.10.195'
     repositories {
         mavenCentral()
     }
