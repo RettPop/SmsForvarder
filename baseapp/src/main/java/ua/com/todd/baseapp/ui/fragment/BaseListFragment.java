@@ -33,7 +33,7 @@ public class BaseListFragment extends BaseFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                onItemClick((AdapterView<?>) parent.getAdapter(), view, position, id);
+                BaseListFragment.this.onItemClick((ListAdapter) parent.getAdapter(), view, position, id);
             }
         });
         setAdapter(adapter);

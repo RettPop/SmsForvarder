@@ -12,16 +12,19 @@ import java.sql.SQLException
 
 import ua.com.todd.smsforwading.Sms
 import kotlin.properties.Delegates
+import ua.com.todd.smsforwading.Profile
 
 public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context, DatabaseHelper.DATABASE_NAME, null, DatabaseHelper.DATABASE_VERSION) {
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private var smsDAO: SmsDAO? = null;
+    private var smsDAO: SmsDAO? = null
+    private var profileDAO: ProfileItemDAO? = null;
 
     //Выполняется, когда файл с БД не найден на устройстве
     override fun onCreate(db: SQLiteDatabase, connectionSource: ConnectionSource) {
         try {
             TableUtils.createTable<Sms>(connectionSource, javaClass<Sms>())
+            TableUtils.createTable<Profile>(connectionSource, javaClass<Profile>())
         } catch (e: SQLException) {
             Log.e(TAG, "error creating DB " + DATABASE_NAME)
             throw RuntimeException(e)
@@ -43,10 +46,14 @@ public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context,
     throws(javaClass<SQLException>())
     public fun getSmsDAO(): SmsDAO? = smsDAO ?: SmsDAO(getConnectionSource(), javaClass<Sms>())
 
+    throws(javaClass<SQLException>())
+    public fun getProfileDAO(): ProfileItemDAO? = profileDAO ?: ProfileItemDAO(getConnectionSource(), javaClass<Profile>())
+
     //выполняется при закрытии приложения
     override fun close() {
         super.close()
         smsDAO = null
+        profileDAO = null
     }
 
     class object {

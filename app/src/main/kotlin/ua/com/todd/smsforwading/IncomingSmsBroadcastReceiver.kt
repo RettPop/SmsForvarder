@@ -19,20 +19,16 @@ public class IncomingSmsBroadcastReceiver : BroadcastReceiver() {
             for (i in pdus.indices) {
                 messages[i] = SmsMessage.createFromPdu(pdus[i] as ByteArray)
             }
-            if (messages.size > 0) {
-                val sb = StringBuilder()
+            if (messages.size() > 0) {
                 for (s in messages) {
-                    sb.append(s?.getMessageBody())
-                    sb.append("\n\n")
+                    val sms = Sms(s?.getMessageBody())
+                    try {
+                        HelperFactory.getHelper().getSmsDAO()?.create(sms)
+                        context.startService(Intent(context, javaClass<MailSenderService>()))
+                    } catch (e: SQLException) {
+                        e.printStackTrace()
+                    }
                 }
-                val sms = Sms(sb.toString())
-                try {
-                    HelperFactory.getHelper().getSmsDAO()?.create(sms)
-                    context.startService(Intent(context, javaClass<MailSenderService>()))
-                } catch (e: SQLException) {
-                    e.printStackTrace()
-                }
-
             }
         }
     }

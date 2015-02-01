@@ -31,24 +31,30 @@ public class MailSenderService : IntentService(javaClass<MailSenderService>().ge
 
     override fun onHandleIntent(intent: Intent) {
         val pref = MyApplication.app().getPreferenceManager<PreferenceManager>()
-        if (pref.isEnabled() && Utils.isNotNull(login, pass, host, port))
+        val items = HelperFactory.getHelper().getProfileDAO()?.getAllItems()
+        if (items!!.isNotEmpty() && pref.isEnabled() && Utils.isNotNull(login, pass, host, port))
             try {
-                val smsList = HelperFactory.getHelper().getSmsDAO()?.getAllSms()
-                if (!smsList!!.empty) with(SimpleEmail()) {
-                    setHostName(host)
-                    setSmtpPort(port)
-                    setStartTLSEnabled(true)
-                    setAuthenticator(DefaultAuthenticator(login, pass))
-                    setFrom(login)
-                    setSubject("TestMail")
-                    setMsg(smsList.toString())
-                    addTo("timandriyaschenko@gmail.com")
-                    send()
-                    HelperFactory.getHelper().getSmsDAO()?.delete(smsList)
-                }
+                val smsList : List<Sms> = HelperFactory.getHelper().getSmsDAO()!!.getAllSms()
+                for (s in smsList)
+                    with(SimpleEmail()) {
+                        setHostName(host)
+                        setSmtpPort(port)
+                        setStartTLSEnabled(true)
+                        setAuthenticator(DefaultAuthenticator(login, pass))
+                        setFrom(login)
+                        setSubject("TestMail")
+                        setMsg(s.toString())
+                        items.map { addTo(it.mail) }
+                        send()
+                        HelperFactory.getHelper().getSmsDAO()?.delete(s)
+                    }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
 
+    }
+
+    fun n(vararg n: String) {
+        n.clone()
     }
 }

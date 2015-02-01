@@ -11,6 +11,9 @@ import android.view.ViewGroup
 import ua.com.todd.smsforwading.animation.HAnimation
 import ua.com.todd.smsforwading.fragment.FragmentFactory.FragmentType
 import android.view.animation.Animation
+import ua.com.todd.smsforwading.model.AddProfileEvent
+import ua.com.todd.smsforwading.ProfileAdapter
+import ua.com.todd.smsforwading.data.HelperFactory
 
 [LayoutId(R.layout.fragment_profile)]
 public class ProfileFragment : BaseListFragment() {
@@ -20,6 +23,13 @@ public class ProfileFragment : BaseListFragment() {
 
     private var buttonAdd: View by Delegates.notNull()
     private var buttonContainer: ViewGroup by Delegates.notNull()
+    private var adapter: ProfileAdapter by Delegates.notNull()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        adapter = ProfileAdapter(getActivity())
+        setAdapter(adapter)
+    }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,12 +41,13 @@ public class ProfileFragment : BaseListFragment() {
             val a = HAnimation(400 as Integer, 500, buttonContainer)
             buttonContainer.startAnimation(a)
         }.getView()
+        setProfiles()
     }
 
     override fun onBackPressed() {
         if (buttonAdd.getVisibility() == View.GONE) {
             val a = HAnimation(-400 as Integer, 500, buttonContainer)
-            a.setAnimationListener(object : Animation.AnimationListener{
+            a.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
                 }
 
@@ -52,6 +63,16 @@ public class ProfileFragment : BaseListFragment() {
             buttonContainer.startAnimation(a)
         } else
             onBack()
+    }
+
+    public fun onEvent(event: AddProfileEvent): Unit {
+        onBackPressed()
+        setProfiles()
+    }
+
+    private fun setProfiles() {
+        val items = HelperFactory.getHelper().getProfileDAO()?.getAllItems()
+        adapter.setData(items)
     }
 
     override fun onDetach() {
