@@ -6,19 +6,20 @@ import ua.com.todd.smsforwading.managers.PreferenceManager
 import ua.com.todd.baseapp.utils.Log
 import ua.com.todd.baseapp.ui.fragment.FragmentFactory
 import ua.com.todd.baseapp.ui.menu.IMenuFactory
-import android.app.Fragment
-import ua.com.todd.smsforwading.fragment.ProfileFragment
 import kotlin.properties.Delegates
+import com.dynamixsoftware.ErrorAgent
 
 public class MyApplication : BaseApplication() {
 
     class object {
-        private var app : MyApplication by Delegates.notNull()
+        private var app: MyApplication by Delegates.notNull()
         public fun app(): MyApplication = app
     }
 
     override fun onCreate() {
         super.onCreate()
+        if (!BuildConfig.DEBUG)
+            ErrorAgent.register(this, 126);
         app = this;
         Log.init(BuildConfig.DEBUG);
         HelperFactory.setHelper(getApplicationContext())
