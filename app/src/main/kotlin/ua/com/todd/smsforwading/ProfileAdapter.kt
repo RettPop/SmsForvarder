@@ -6,9 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import java.util.ArrayList
 import android.widget.TextView
-import ua.com.todd.smsforwading.model.MenuEvent
 
-public class ProfileAdapter(private val context: Context) : BaseAdapter() {
+public class ProfileAdapter(private val context: Context, private val onClick : (View) -> Unit) : BaseAdapter() {
 
     private val items = ArrayList<Profile>()
 
@@ -19,15 +18,25 @@ public class ProfileAdapter(private val context: Context) : BaseAdapter() {
     override fun getItemId(position: Int): Long = position.toLong()
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
-        val text = TextView(context)
-        text.setText(getItem(position).mail)
-        return text
+        val item = getItem(position)
+        val view = View.inflate(context, R.layout.item_profile, null)
+        val buttonRemove = view.findViewById(R.id.button_remove)
+        val textProfile = view.findViewById(R.id.text_profile) as TextView
+        textProfile.setText(item.mail)
+        buttonRemove.setOnClickListener(onClick)
+        buttonRemove.setTag(item)
+        return view
     }
 
     public fun setData(data: List<Profile>?) {
         data ?: return
         items.clear()
         items.addAll(data)
+        notifyDataSetChanged()
+    }
+
+    fun remove(item : Profile) {
+        items.remove(items.indexOf(item))
         notifyDataSetChanged()
     }
 }

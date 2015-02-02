@@ -14,6 +14,7 @@ import android.view.animation.Animation
 import ua.com.todd.smsforwading.model.AddProfileEvent
 import ua.com.todd.smsforwading.ProfileAdapter
 import ua.com.todd.smsforwading.data.HelperFactory
+import ua.com.todd.smsforwading.Profile
 
 [LayoutId(R.layout.fragment_profile)]
 public class ProfileFragment : BaseListFragment() {
@@ -27,7 +28,11 @@ public class ProfileFragment : BaseListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = ProfileAdapter(getActivity())
+        adapter = ProfileAdapter(getActivity()){
+            val item = it.getTag() as Profile
+            HelperFactory.getHelper().getProfileDAO()?.delete(item)
+            adapter.remove(item)
+        }
         setAdapter(adapter)
     }
 
