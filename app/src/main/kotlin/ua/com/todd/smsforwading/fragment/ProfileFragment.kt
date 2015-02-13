@@ -28,7 +28,7 @@ public class ProfileFragment : BaseListFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        adapter = ProfileAdapter(getActivity()){
+        adapter = ProfileAdapter(getActivity()) {
             val item = it.getTag() as Profile
             HelperFactory.getHelper().getProfileDAO()?.delete(item)
             adapter.remove(item)
@@ -41,9 +41,11 @@ public class ProfileFragment : BaseListFragment() {
         buttonContainer = getAQuery().id(R.id.add_button_container).getView() as ViewGroup
         buttonAdd = getAQuery().id(R.id.add_button).clicked {
             buttonAdd.setVisibility(View.GONE)
-            getBaseActivity().getFragmentLauncher()
-                    .replaceFragmentWithStack(R.id.add_button_container, FragmentType.ITEM)
-            val a = HAnimation(400 as Integer, 500, buttonContainer)
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.add_button_container, getFragment(FragmentType.ITEM))
+                    .addToBackStack(null)
+                    .commit()
+            val a = HAnimation(400, 500, buttonContainer)
             buttonContainer.startAnimation(a)
         }.getView()
         setProfiles()
@@ -51,7 +53,7 @@ public class ProfileFragment : BaseListFragment() {
 
     override fun onBackPressed() {
         if (buttonAdd.getVisibility() == View.GONE) {
-            val a = HAnimation(-400 as Integer, 500, buttonContainer)
+            val a = HAnimation(-400, 500, buttonContainer)
             a.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
                 }
@@ -78,10 +80,5 @@ public class ProfileFragment : BaseListFragment() {
     private fun setProfiles() {
         val items = HelperFactory.getHelper().getProfileDAO()?.getAllItems()
         adapter.setData(items)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        getBaseActivity().getFragmentLauncher().clearStack()
     }
 }

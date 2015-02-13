@@ -5,7 +5,7 @@ import android.view.animation.Transformation
 import android.util.Log
 import android.view.View
 
-public class HAnimation(val h : Integer, val d : Long, val view : View) : Animation() {
+public class HAnimation(val h : Int, val d : Long, val view : View) : Animation() {
 
     val prevH = view.getLayoutParams().height
 
@@ -15,7 +15,7 @@ public class HAnimation(val h : Integer, val d : Long, val view : View) : Animat
 
     override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
         super.applyTransformation(interpolatedTime, t)
-        val currH = h.floatValue() * interpolatedTime
+        val currH = h.toFloat() * interpolatedTime
         view.getLayoutParams().height = prevH + currH.toInt()
         view.requestLayout()
     }

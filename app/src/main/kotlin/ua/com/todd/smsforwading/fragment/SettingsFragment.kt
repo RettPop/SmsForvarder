@@ -45,13 +45,13 @@ public class SettingsFragment : BaseFragment() {
                 port = etPort.getText().toString()
                 val port = Integer.parseInt(port)
                 with(getPreferenceManager<PreferenceManager>()) {
-                    storeEmail(email as String)
-                    storeHost(host as String)
-                    storePassword(pass as String)
+                    storeEmail(email)
+                    storeHost(host)
+                    storePassword(pass)
                     storePort(port)
                 }
                 v.setVisibility(View.GONE)
-                buttonCancel!!.setVisibility(View.GONE)
+                buttonCancel.setVisibility(View.GONE)
             }
         }).getButton()
 
@@ -62,7 +62,7 @@ public class SettingsFragment : BaseFragment() {
                 etPass.setText(pass)
                 etPort.setText(port)
                 v.setVisibility(View.GONE)
-                buttonOk!!.setVisibility(View.GONE)
+                buttonOk.setVisibility(View.GONE)
             }
         }).getButton()
 
@@ -79,11 +79,11 @@ public class SettingsFragment : BaseFragment() {
                 val currPass = etPass.getText().toString()
                 val currPort = etPort.getText().toString()
                 if (currHost != host || currMail != email || currPass != pass || currPort != port) {
-                    buttonOk!!.setVisibility(View.VISIBLE)
-                    buttonCancel!!.setVisibility(View.VISIBLE)
+                    buttonOk.setVisibility(View.VISIBLE)
+                    buttonCancel.setVisibility(View.VISIBLE)
                 } else {
-                    buttonOk!!.setVisibility(View.GONE)
-                    buttonCancel!!.setVisibility(View.GONE)
+                    buttonOk.setVisibility(View.GONE)
+                    buttonCancel.setVisibility(View.GONE)
                 }
             }
         }

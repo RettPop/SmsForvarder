@@ -80,6 +80,9 @@ public abstract class BaseFragment extends Fragment {
         return baseActivity;
     }
 
+    public Fragment getFragment(FragmentFactory.IBaseFragmentType type) {
+        return getBaseActivity().getFragment(type);
+    }
     @Override
     public void onDetach() {
         super.onDetach();
