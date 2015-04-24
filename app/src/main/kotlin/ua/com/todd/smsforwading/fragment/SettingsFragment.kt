@@ -87,19 +87,19 @@ public class SettingsFragment : BaseFragment() {
                 }
             }
         }
-        w(etHost, etPort, etMail, etPass) {addTextChangedListener(textWatcher)}
+        forEach(etHost, etPort, etMail, etPass) {addTextChangedListener(textWatcher)}
     }
 
     override fun onBackPressed() {
         onBack()
     }
 
-    class object {
+    companion object {
         public fun getInstance(): Fragment = SettingsFragment()
     }
 }
 
-public inline fun <T, R> w(vararg receivers: T, f: T.() -> R): Unit {
+public inline fun <T, R> forEach(vararg receivers: T, f: T.() -> R): Unit {
     for (r in receivers)
         r.f()
 }

@@ -13,7 +13,7 @@ import ua.com.todd.smsforwading.model.AddProfileEvent
 
 [LayoutId(R.layout.fragment_item)]
 public class AddItemFragment : BaseFragment() {
-    class object {
+    companion object {
         public fun getInstance(): Fragment = AddItemFragment()
     }
 

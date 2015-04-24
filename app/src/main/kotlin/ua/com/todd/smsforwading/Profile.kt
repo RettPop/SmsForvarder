@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable
 DatabaseTable(tableName = "profiles")
 public class Profile(private val m: String? = null) {
 
-    class object {
+    companion object {
         public val PROFILE_FIELD: String = "mail"
     }
 

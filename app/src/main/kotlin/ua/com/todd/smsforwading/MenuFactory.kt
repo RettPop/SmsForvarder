@@ -23,7 +23,7 @@ public enum class MenuItemType(val id: Long) {
     ABOUT : MenuItemType(ABOUT_ID)
     PROFILE : MenuItemType(PROFILE_ID)
 
-    class object {
+    companion object {
 
         private val PROFILE_ID : Long = 1
         private val SETTINGS_ID : Long = 2

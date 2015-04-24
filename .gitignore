@@ -46,4 +46,4 @@ build/
 project.properties
 obj
 *.hprof
-
+.DS_Store

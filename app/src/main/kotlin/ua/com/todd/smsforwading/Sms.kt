@@ -7,7 +7,7 @@ import com.j256.ormlite.table.DatabaseTable
 DatabaseTable(tableName = "messages")
 public class Sms(val mes: String? = null) {
 
-    class object {
+    companion object {
         public val SMS_FIELD_MESSAGE: String = "message"
     }
 

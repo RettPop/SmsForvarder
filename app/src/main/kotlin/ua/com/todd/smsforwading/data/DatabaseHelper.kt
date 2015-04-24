@@ -56,7 +56,7 @@ public class DatabaseHelper(context: Context) : OrmLiteSqliteOpenHelper(context,
         profileDAO = null
     }
 
-    class object {
+    companion object {
 
         private val TAG = javaClass<DatabaseHelper>().getSimpleName()
 

@@ -5,7 +5,7 @@ import android.content.Context
 import com.j256.ormlite.android.apptools.OpenHelperManager
 
 public class HelperFactory {
-    class object {
+    companion object {
 
         private var databaseHelper: DatabaseHelper? = null
 

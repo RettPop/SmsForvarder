@@ -18,7 +18,7 @@ import kotlin.properties.Delegates
 
 [LayoutId(R.layout.fragment_profile)]
 public class ProfileFragment : BaseListFragment() {
-    class object {
+    companion object {
         public fun getInstance(): Fragment = ProfileFragment()
     }
 

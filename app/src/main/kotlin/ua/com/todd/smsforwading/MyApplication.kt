@@ -11,7 +11,7 @@ import com.dynamixsoftware.ErrorAgent
 
 public class MyApplication : BaseApplication() {
 
-    class object {
+    companion object {
         private var app: MyApplication by Delegates.notNull()
         public fun app(): MyApplication = app
     }

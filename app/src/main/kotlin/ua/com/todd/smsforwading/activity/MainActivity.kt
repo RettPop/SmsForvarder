@@ -14,6 +14,7 @@ import ua.com.todd.smsforwading.R
 import ua.com.todd.smsforwading.fragment.FragmentFactory
 import ua.com.todd.smsforwading.managers.PreferenceManager
 import ua.com.todd.smsforwading.model.MenuEvent
+import kotlinx.android.synthetic.toolbar_view.*
 
 [LayoutId(R.layout.activity_main)]
 public class MainActivity : SlideMenuBaseActivity() {
@@ -30,9 +31,8 @@ public class MainActivity : SlideMenuBaseActivity() {
                 .commit()
         addToolbarView(R.layout.toolbar_view)
         val isEnable = pref.isEnabled()
-        val switch = findViewById(R.id.switch_enable) as Switch
-        switch.setChecked(isEnable)
-        switch.setOnCheckedChangeListener {(compoundButton, b) ->
+        switchEnable.setChecked(isEnable)
+        switchEnable.setOnCheckedChangeListener {(compoundButton, b) ->
             pref.storeEnabled(b)
         }
     }
