@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import ua.com.todd.baseapp.ui.activity.LayoutId
 import ua.com.todd.baseapp.ui.fragment.BaseListFragment
+import ua.com.todd.baseapp.utils.AndroidUtils
 import ua.com.todd.smsforwading.Profile
 import ua.com.todd.smsforwading.ProfileAdapter
 import ua.com.todd.smsforwading.R
@@ -25,6 +26,7 @@ public class ProfileFragment : BaseListFragment() {
     private var buttonAdd: View by Delegates.notNull()
     private var buttonContainer: ViewGroup by Delegates.notNull()
     private var adapter: ProfileAdapter by Delegates.notNull()
+    private var animHeight: Int by Delegates.notNull()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +40,14 @@ public class ProfileFragment : BaseListFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        animHeight = (AndroidUtils.getScreenHeight(getActivity()).toFloat() * 0.5).toInt();
         buttonContainer = getAQuery().id(R.id.add_button_container).getView() as ViewGroup
         buttonAdd = getAQuery().id(R.id.add_button).clicked {
             buttonAdd.setVisibility(View.GONE)
             getFragmentManager().beginTransaction()
                     .replace(R.id.add_button_container, getFragment(FragmentType.ITEM), FragmentType.ITEM.toString())
                     .commit()
-            val a = HAnimation(400, 500, buttonContainer)
+            val a = HAnimation(animHeight, 300, buttonContainer)
             buttonContainer.startAnimation(a)
         }.getView()
         setProfiles()
@@ -52,7 +55,7 @@ public class ProfileFragment : BaseListFragment() {
 
     override fun onBackPressed() {
         if (buttonAdd.getVisibility() == View.GONE) {
-            val a = HAnimation(-400, 500, buttonContainer)
+            val a = HAnimation(-animHeight, 300, buttonContainer)
             a.setAnimationListener(object : Animation.AnimationListener {
                 override fun onAnimationStart(animation: Animation?) {
                 }

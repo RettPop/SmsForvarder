@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_red_dark">
-    <EditText
-        android:id="@+id/text_mail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Mail"
-        android:background="@android:color/white"
-        android:layout_margin="5dp"/>
-    <Button
-        android:id="@+id/button_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"/>
-</LinearLayout>
+    android:background="@android:color/holo_red_dark" />
