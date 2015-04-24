@@ -38,7 +38,7 @@ dependencies {
     compile files('libs/ExceptionHandler.jar')
 }
 buildscript {
-    ext.kotlin_version = '0.10.195'
+    ext.kotlin_version = '0.11.91.1'
     repositories {
         mavenCentral()
     }

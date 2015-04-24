@@ -1,20 +1,20 @@
 package ua.com.todd.smsforwading.fragment
 
 import android.app.Fragment
-import ua.com.todd.smsforwading.R
+import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.view.animation.Animation
 import ua.com.todd.baseapp.ui.activity.LayoutId
 import ua.com.todd.baseapp.ui.fragment.BaseListFragment
-import android.view.View
-import android.os.Bundle
-import kotlin.properties.Delegates
-import android.view.ViewGroup
-import ua.com.todd.smsforwading.animation.HAnimation
-import ua.com.todd.smsforwading.fragment.FragmentFactory.FragmentType
-import android.view.animation.Animation
-import ua.com.todd.smsforwading.model.AddProfileEvent
-import ua.com.todd.smsforwading.ProfileAdapter
-import ua.com.todd.smsforwading.data.HelperFactory
 import ua.com.todd.smsforwading.Profile
+import ua.com.todd.smsforwading.ProfileAdapter
+import ua.com.todd.smsforwading.R
+import ua.com.todd.smsforwading.animation.HAnimation
+import ua.com.todd.smsforwading.data.HelperFactory
+import ua.com.todd.smsforwading.fragment.FragmentFactory.FragmentType
+import ua.com.todd.smsforwading.model.AddProfileEvent
+import kotlin.properties.Delegates
 
 [LayoutId(R.layout.fragment_profile)]
 public class ProfileFragment : BaseListFragment() {
@@ -42,8 +42,7 @@ public class ProfileFragment : BaseListFragment() {
         buttonAdd = getAQuery().id(R.id.add_button).clicked {
             buttonAdd.setVisibility(View.GONE)
             getFragmentManager().beginTransaction()
-                    .replace(R.id.add_button_container, getFragment(FragmentType.ITEM))
-                    .addToBackStack(null)
+                    .replace(R.id.add_button_container, getFragment(FragmentType.ITEM), FragmentType.ITEM.toString())
                     .commit()
             val a = HAnimation(400, 500, buttonContainer)
             buttonContainer.startAnimation(a)
@@ -60,7 +59,10 @@ public class ProfileFragment : BaseListFragment() {
 
                 override fun onAnimationEnd(animation: Animation?) {
                     buttonAdd.setVisibility(View.VISIBLE)
-                    onBackPressed()
+                    val fragment = getFragmentManager().findFragmentByTag(FragmentType.ITEM.toString());
+                    getFragmentManager().beginTransaction()
+                            .remove(fragment)
+                            .commit()
                 }
 
                 override fun onAnimationRepeat(animation: Animation?) {
@@ -68,8 +70,9 @@ public class ProfileFragment : BaseListFragment() {
 
             })
             buttonContainer.startAnimation(a)
-        } else
+        } else {
             onBack()
+        }
     }
 
     public fun onEvent(event: AddProfileEvent): Unit {

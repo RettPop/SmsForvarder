@@ -1,16 +1,19 @@
 package ua.com.todd.smsforwading.activity
 
-import ua.com.todd.smsforwading.R
-import ua.com.todd.baseapp.ui.activity.SlideMenuBaseActivity
-import ua.com.todd.baseapp.ui.activity.LayoutId
 import android.os.Bundle
-import ua.com.todd.baseapp.ui.menu.config.MenuConfig
-import ua.com.todd.smsforwading.model.MenuEvent
-import ua.com.todd.smsforwading.MenuItemType
-import ua.com.todd.smsforwading.fragment.FragmentFactory
+import android.support.v7.app.ActionBarActivity
 import android.widget.Switch
+import ua.com.todd.baseapp.model.OnBackPressedResponseEvent
+import ua.com.todd.baseapp.ui.activity.BaseActivity
+import ua.com.todd.baseapp.ui.activity.LayoutId
+import ua.com.todd.baseapp.ui.activity.SlideMenuBaseActivity
+import ua.com.todd.baseapp.ui.menu.config.MenuConfig
+import ua.com.todd.smsforwading.MenuItemType
 import ua.com.todd.smsforwading.MyApplication
+import ua.com.todd.smsforwading.R
+import ua.com.todd.smsforwading.fragment.FragmentFactory
 import ua.com.todd.smsforwading.managers.PreferenceManager
+import ua.com.todd.smsforwading.model.MenuEvent
 
 [LayoutId(R.layout.activity_main)]
 public class MainActivity : SlideMenuBaseActivity() {
@@ -32,6 +35,10 @@ public class MainActivity : SlideMenuBaseActivity() {
         switch.setOnCheckedChangeListener {(compoundButton, b) ->
             pref.storeEnabled(b)
         }
+    }
+
+    public fun onEvent(event: OnBackPressedResponseEvent) {
+        onBack()
     }
 
     public fun onEvent(event: MenuEvent) {

@@ -20,7 +20,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     final protected Log LOG = new Log(getClass());
 
     private Toolbar toolbar;
-    private BaseApplication baseApplication;
+    private BaseApplication baseApplication = BaseApplication.app();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,10 @@ public abstract class BaseActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         EventBus.getDefault().post(new OnBackPressedEvent());
+    }
+
+    final public void onBack(){
+        super.onBackPressed();
     }
 
     @Override
